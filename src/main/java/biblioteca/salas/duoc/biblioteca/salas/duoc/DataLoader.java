@@ -64,7 +64,7 @@ public class DataLoader implements CommandLineRunner {
         // Generar salas
         for (int i = 0; i < 10; i++) {
             Sala sala = new Sala();
-            sala.setCodigo(i + 1);
+            sala.setCodigo(String.valueOf(i + 1));
             sala.setNombre(faker.university().name());
             sala.setCapacidad(faker.number().numberBetween(10, 100));
             sala.setId_instituto(faker.number().randomDigit());
