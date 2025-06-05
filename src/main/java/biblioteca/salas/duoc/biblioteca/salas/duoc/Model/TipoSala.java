@@ -1,4 +1,4 @@
-package Model;
+package biblioteca.salas.duoc.biblioteca.salas.duoc.Model;
 
 
 import jakarta.persistence.Column;
@@ -19,8 +19,8 @@ public class TipoSala {
 
     @Id
     @Column(nullable = false, unique = true)
-    public Integer id_tipo;
+    private Integer id_tipo;
 
     @Column(nullable = false, unique = false, length = 30)
-    public String nombre;
+    private String nombre;
 }

@@ -1,4 +1,4 @@
-package Model;
+package biblioteca.salas.duoc.biblioteca.salas.duoc.Model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,31 +6,37 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "estudiante")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "estudiante")
+
 
 public class Estudiante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
     @Column(nullable = false, unique = true, length = 9)
-    public String run;
+    private String run;
 
     @Column(nullable = false, unique = false, length = 100)
-    public String nombres;
+    private String nombres;
 
     @Column(nullable = false, unique = true, length = 100)
-    public String correo;
+    private String correo;
 
     @Column(nullable = false, unique = false, length = 1)
-    public Character jornada;
+    private Character jornada;
 
     @Column(nullable = false, unique = true)
-    public String numero;
+    private Integer telefono;
+
+    @ManyToOne
+    @JoinColumn(name = "codigo_carrera", nullable = false)
+    private Carrera carrera;
+
 
 
 

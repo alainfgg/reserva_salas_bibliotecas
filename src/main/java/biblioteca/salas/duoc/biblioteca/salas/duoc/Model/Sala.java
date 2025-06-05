@@ -1,10 +1,7 @@
-package Model;
+package biblioteca.salas.duoc.biblioteca.salas.duoc.Model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,15 +16,19 @@ public class Sala {
 
     @Id
     @Column(nullable = false, unique = false)
-    public String codigo;
+    private String codigo;
 
     @Column(nullable = false, unique = false, length = 50)
-    public String nombre;
+    private String nombre;
 
     @Column(nullable = false, unique = false)
-    public Integer capacidad;
+    private Integer capacidad;
 
     @Column(nullable = false, unique = false)
-    public Integer id_instituto;
+    private Integer id_instituto;
+
+    @ManyToOne
+    @JoinColumn(name = "id_tipo", nullable = false)
+    private TipoSala tipoSala;
 
 }

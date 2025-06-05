@@ -1,4 +1,4 @@
-package Model;
+package biblioteca.salas.duoc.biblioteca.salas.duoc.Model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,16 +9,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "carrera")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "carrera")
+
 public class Carrera {
 
     @Id
     @Column(length = 100)
-    public String codigo;
+    private String codigo;
 
     @Column(length = 100)
-    public String nombre;
+    private String nombre;
+
+
 }
