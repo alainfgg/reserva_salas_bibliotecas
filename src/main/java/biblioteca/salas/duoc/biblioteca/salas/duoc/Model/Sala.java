@@ -21,11 +21,10 @@ public class Sala {
     @Column(nullable = false, unique = false, length = 50)
     private String nombre;
 
-    @Column(nullable = false, unique = false)
     private Integer capacidad;
 
     @Column(nullable = false, unique = false)
-    private Integer id_instituto;
+    private Integer idInstituto;
 
     @ManyToOne
     @JoinColumn(name = "id_tipo", nullable = false)

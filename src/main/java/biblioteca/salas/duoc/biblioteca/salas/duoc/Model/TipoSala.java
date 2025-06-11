@@ -19,7 +19,7 @@ public class TipoSala {
 
     @Id
     @Column(nullable = false, unique = true)
-    private Integer id_tipo;
+    private Integer idTipo;
 
     @Column(nullable = false, unique = false, length = 30)
     private String nombre;

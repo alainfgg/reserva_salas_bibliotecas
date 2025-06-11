@@ -24,13 +24,12 @@ public class Estudiante {
     @Column(nullable = false, unique = false, length = 100)
     private String nombres;
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(length = 100)
     private String correo;
 
-    @Column(nullable = false, unique = false, length = 1)
+    @Column(nullable = false, length = 1)
     private Character jornada;
 
-    @Column(nullable = false, unique = true)
     private Integer telefono;
 
     @ManyToOne

@@ -19,13 +19,13 @@ public class Reserva {
     private Integer id;
 
     @Column(nullable = false, unique = false)
-    private Date fecha_solicitada;
+    private Date fechaSolicitada;
 
     @Column(nullable = false, unique = false)
-    private Date hora_solicitada;
+    private Date horaSolicitada;
 
-    @Column(nullable = false, unique = false)
-    private Date hora_cierre;
+
+    private Date horaCierre;
 
     @Column(nullable = false, unique = false)
     private Integer estado;

@@ -14,7 +14,7 @@ import java.util.Random;
 
 @Profile("dev")
 @Component
-public class DataLoader implements CommandLineRunner {
+public abstract class DataLoader implements CommandLineRunner {
 
     @Autowired
     private CarreraRepository carreraRepository;
@@ -27,7 +27,6 @@ public class DataLoader implements CommandLineRunner {
     @Autowired
     private TipoSalaRepository tipoSalaRepository;
 
-    @Override
     public void run (String args) throws Exception{
 
         Faker faker = new Faker();
@@ -36,7 +35,7 @@ public class DataLoader implements CommandLineRunner {
         //Generar tipos de sala
         for (int i = 0; i < 3; i++) {
             TipoSala tipoSala = new TipoSala();
-            tipoSala.setId_tipo(i + 1);
+            tipoSala.setIdTipo(i + 1);
             tipoSala.setNombre(faker.book().genre());
             tipoSalaRepository.save(tipoSala);
             
@@ -67,7 +66,7 @@ public class DataLoader implements CommandLineRunner {
             sala.setCodigo(String.valueOf(i + 1));
             sala.setNombre(faker.university().name());
             sala.setCapacidad(faker.number().numberBetween(10, 100));
-            sala.setId_instituto(faker.number().randomDigit());
+            sala.setIdInstituto(faker.number().randomDigit());
             sala.setTipoSala(tipoSalaRepository.findAll().get(random.nextInt(3)));
             salaRepository.save(sala);
         }
@@ -79,9 +78,9 @@ public class DataLoader implements CommandLineRunner {
             reserva.setId(i + 1);
             reserva.setEstudiante(estudiantes.get(random.nextInt(estudiantes.size())));
             reserva.setSala(salas.get(random.nextInt(salas.size())));
-            reserva.setFecha_solicitada(new Date());
-            reserva.setHora_solicitada(new Date());
-            reserva.setHora_cierre(new Date(System.currentTimeMillis() +
+            reserva.setFechaSolicitada(new Date());
+            reserva.setHoraSolicitada(new Date());
+            reserva.setHoraCierre(new Date(System.currentTimeMillis() +
                     faker.number().numberBetween(3600000, 7200000))); // 1-2 horas más
             reserva.setEstado(faker.number().numberBetween(0, 2));
             reservaRepository.save(reserva);
