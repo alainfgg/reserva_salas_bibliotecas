@@ -8,6 +8,6 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-	}
+	} //podemos agregar CommandLineRunner emtre void y main para probar métodos (?
 
 }

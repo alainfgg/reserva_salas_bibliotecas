@@ -1,57 +1,62 @@
 package biblioteca.salas.duoc.biblioteca.salas.duoc;
 
-import biblioteca.salas.duoc.biblioteca.salas.duoc.Model.*;
-import biblioteca.salas.duoc.biblioteca.salas.duoc.Repository.*;
+import biblioteca.salas.duoc.biblioteca.salas.duoc.Model.Carrera;
+import biblioteca.salas.duoc.biblioteca.salas.duoc.Model.Estudiante;
+import biblioteca.salas.duoc.biblioteca.salas.duoc.Model.TipoSala;
+import biblioteca.salas.duoc.biblioteca.salas.duoc.Repository.CarreraRepository;
+import biblioteca.salas.duoc.biblioteca.salas.duoc.Repository.EstudianteRepository;
+import biblioteca.salas.duoc.biblioteca.salas.duoc.Repository.TipoSalaRepository;
 import net.datafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-@Profile("dev")
-@Component
-public abstract class DataLoader implements CommandLineRunner {
 
+@Profile("dev")//Perfil adecuado que ejecuta ciertas lineas o modulos de programación, esto se ve en application.properties
+@Component
+public class DataLoader implements CommandLineRunner {
+
+
+    @Autowired
+    private TipoSalaRepository tipoSalaRepository;
     @Autowired
     private CarreraRepository carreraRepository;
     @Autowired
     private EstudianteRepository estudianteRepository;
-    @Autowired
-    private ReservaRepository reservaRepository;
-    @Autowired
-    private SalaRepository salaRepository;
-    @Autowired
-    private TipoSalaRepository tipoSalaRepository;
 
-    public void run (String args) throws Exception{
-
+    @Override //sobrecarga de métoddo
+    //no utilizar el commandlinerunner, utiliza el metoddo posterior a la notación
+    public void run(String... args) throws Exception {
         Faker faker = new Faker();
         Random random = new Random();
+        //orden de generación importa
+        //siempre el orden es desde tablas que son pequeñas, o que no cuentan con foreign key, ya que
+        //por ejemplo, la tabla estudiante requiere del campo codigo_carrera
 
-        //Generar tipos de sala
+        //Creando tipos de sala ==> la tabla que es débil de relación
         for (int i = 0; i < 3; i++) {
             TipoSala tipoSala = new TipoSala();
-            tipoSala.setIdTipo(i + 1);
-            tipoSala.setNombre(faker.book().genre());
-            tipoSalaRepository.save(tipoSala);
-            
+            tipoSala.setNombre(faker.redDeadRedemption2().majorCharacter());
+            tipoSalaRepository.save(tipoSala); //guarda bolsa, que es tipo sala
         }
+
         //Generar carreras
         for (int i = 0; i < 5; i++) {
             Carrera carrera = new Carrera();
-            carrera.setCodigo(faker.code().asin());
+            carrera.setCodigo(faker.code().asin()); //entrega un código, más no uno único.
             carrera.setNombre(faker.educator().course());
             carreraRepository.save(carrera);
         }
+
         List<Carrera> carreras = carreraRepository.findAll();
-        //Generar estudiantes
+
+        //Generamos carreras
         for (int i = 0; i < 50; i++) {
             Estudiante estudiante = new Estudiante();
-            estudiante.setId(i + 1);
             estudiante.setRun(faker.idNumber().valid());
             estudiante.setNombres(faker.name().fullName());
             estudiante.setCorreo(faker.internet().emailAddress());
@@ -59,31 +64,6 @@ public abstract class DataLoader implements CommandLineRunner {
             estudiante.setTelefono(faker.number().numberBetween(100000000, 999999999));
             estudiante.setCarrera(carreras.get(random.nextInt(carreras.size())));
             estudianteRepository.save(estudiante);
-        }
-        // Generar salas
-        for (int i = 0; i < 10; i++) {
-            Sala sala = new Sala();
-            sala.setCodigo(String.valueOf(i + 1));
-            sala.setNombre(faker.university().name());
-            sala.setCapacidad(faker.number().numberBetween(10, 100));
-            sala.setIdInstituto(faker.number().randomDigit());
-            sala.setTipoSala(tipoSalaRepository.findAll().get(random.nextInt(3)));
-            salaRepository.save(sala);
-        }
-        List<Estudiante> estudiantes = estudianteRepository.findAll();
-        List<Sala> salas = salaRepository.findAll();
-        // Generar reservas
-        for (int i = 0; i < 20; i++) {
-            Reserva reserva = new Reserva();
-            reserva.setId(i + 1);
-            reserva.setEstudiante(estudiantes.get(random.nextInt(estudiantes.size())));
-            reserva.setSala(salas.get(random.nextInt(salas.size())));
-            reserva.setFechaSolicitada(new Date());
-            reserva.setHoraSolicitada(new Date());
-            reserva.setHoraCierre(new Date(System.currentTimeMillis() +
-                    faker.number().numberBetween(3600000, 7200000))); // 1-2 horas más
-            reserva.setEstado(faker.number().numberBetween(0, 2));
-            reservaRepository.save(reserva);
         }
     }
 }
